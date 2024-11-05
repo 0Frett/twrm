@@ -8,11 +8,13 @@ from data_client import StrategyQA_Client
 import re
 
 def get_args():
-    parser = argparse.ArgumentParser(description="Generate dataset for StrategyQA.")
+    parser = argparse.ArgumentParser(description="Args")
     parser.add_argument("--data_size", type=int, default=100, help="Size of the dataset to use.")
     parser.add_argument("--few_shot_num", type=int, default=5, help="Number of few-shot examples to include.")
     parser.add_argument("--batch_size", type=int, default=10, help="Batch size for dataset.")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility.")
+    parser.add_argument("--onlyq", action='store_true', help="Include this flag to enable only questions")
+
     
     return parser.parse_args()
 
@@ -60,7 +62,8 @@ if __name__ == "__main__":
         data_size=args.data_size, 
         few_shot_num=args.few_shot_num, 
         batch_size=args.batch_size, 
-        seed=args.seed
+        seed=args.seed,
+        onlyq=args.onlyq
     )
     # llm
     llm = OpenAIModel(model="gpt-4o-mini", max_tokens=4096, temperature=0.6)
